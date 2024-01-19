@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airline Registration Form</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 text-center"> 
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYeJb9ntBH9Vk2a43jaCjase6gpw26_s81xg&usqp=CAU" alt="image" class="img-fluid">
+            </div>
+            <div class="col-md-6 main">
+                <form action="/sign_up" method="POST" id="registrationForm">
+                    <h2>Airline Registration Form</h2>
+                    <input type="text" class="box" id="name" name="name" placeholder="Full Name" required/><br>
+                    <input type="text" class="box" id="email" name="email" placeholder="Email Id" required/>
+                    <span id="emailError" class="error"></span><br>
+                    <input type="text" class="box" id="phno" name="phno" placeholder="Phone Number" required/>
+                    <span id="phoneError" class="error"></span><br>
+                    <input type="text" class="box" id="password" name="password" placeholder="Password" required/>
+                    <span id="passwordError" class="error"></span><br>
+                    <input type="text" class="box" id="confirmpassword" name="confirmpassword" placeholder="Confirm Password" required/>
+                    <span id="confirmpasswordError" class="error"></span><br>
+                    <input type="submit" value="Submit" id="submit"/>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+           document.addEventListener("DOMContentLoaded", function () {
+        var form = document.getElementById("registrationForm");
+        form.addEventListener("submit", function (event) {
+            if (!validateForm()) {
+                event.preventDefault(); 
+            }
+        });
+
+        function validateForm() {
+            const fullName=document.getElementById("name").value;
+            const phoneNumber = document.getElementById("phno").value;
+            const email = document.getElementById("email").value;
+            const password=document.getElementById("password").value;
+            const confirmpassword=document.getElementById("confirmpassword").value;
+        
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const isEmailValid = emailRegex.test(email);
+            const isPhoneValid = /^\d{10}$/.test(phoneNumber);
+            const isPasswordValid = password.length >= 8;
+            const doPasswordsMatch = password === confirmpassword;
+
+    document.getElementById("email").style.borderColor = isEmailValid ? "" : "red";
+    document.getElementById('emailError').textContent = isEmailValid ? '' : 'Invalid Email Address';
+
+    document.getElementById("phno").style.borderColor = isPhoneValid ? "" : "red";
+    document.getElementById('phoneError').textContent = isPhoneValid ? '' : 'Phone no. must be of 10 digits';
+
+    document.getElementById("password").style.borderColor = isPasswordValid ? "" : "red";
+    document.getElementById('passwordError').textContent = isPasswordValid ? '' : 'Password must be at least 8 characters';
+
+    document.getElementById("confirmpassword").style.borderColor = doPasswordsMatch ? "" : "red";
+    document.getElementById('confirmpasswordError').textContent = doPasswordsMatch ? '' : 'Password do not match';
+    return isEmailValid && isPhoneValid && isPasswordValid && doPasswordsMatch;
+        }
+    });
+    </script>
+</body>
+</html>
